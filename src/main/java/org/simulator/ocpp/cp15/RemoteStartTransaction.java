@@ -53,28 +53,31 @@ public class RemoteStartTransaction extends
 		parms.put(StartTransaction.CONNECTORID, request.getConnectorId());
 		parms.put(UpwardsOperation.CENTRAL_URL, getCentralURL(chargeBoxIdentity));
 
-		ChargeBoxStatus obj = getDeviceStatus(chargeBoxIdentity, request.getConnectorId());
-		if (obj == null) {
+		ChargeBoxStatus old = getDeviceStatus(chargeBoxIdentity, request.getConnectorId());
+		if (old == null) {
 			// if no reservation
-			return accept(parms, obj);
+			return accept(parms, old);
 		}
 		// some body is using this connector.
-		if (ChargePointStatus.OCCUPIED.equals(obj.getStatus())) {
+		if (ChargePointStatus.OCCUPIED.equals(old.getStatus())) {
+			auditService.auditRequest(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 		// device is faulted
-		if (ChargePointStatus.FAULTED.equals(obj.getStatus())) {
+		if (ChargePointStatus.FAULTED.equals(old.getStatus())) {
+			auditService.auditRequest(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
 		XMLGregorianCalendar calendar = XMLGregorianCalendarUtil.createXMLGregorianCalendar();
-		if (obj.getExpiryDate().compare(calendar) < 0) {
+		if (old.getExpiryDate().compare(calendar) < 0) {
 			// if reservation is expired
-			return accept(parms, obj);
-		} else if (obj.getId_tag().equals(request.getIdTag())) {
+			return accept(parms, old);
+		} else if (old.getId_tag().equals(request.getIdTag())) {
 			// if it's my reservation
-			return accept(parms, obj);
+			return accept(parms, old);
 		} else {
+			auditService.auditRequest(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 

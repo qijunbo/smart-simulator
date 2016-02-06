@@ -2,6 +2,7 @@ package org.simulator.ocpp;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.mongodb.util.JSON;
 import com.ocpp.cs201206.ChargePointStatus;
 
 public class ChargeBoxStatus {
@@ -76,4 +77,11 @@ public class ChargeBoxStatus {
 		this.expiryDate = expiryDate;
 	}
 
+	@Override
+	public String toString() {
+		return  JSON.serialize(this);
+	}
+
+	
+	
 }

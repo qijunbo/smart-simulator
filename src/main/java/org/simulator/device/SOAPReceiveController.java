@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/simulator")
 public class SOAPReceiveController {
 
-    @Autowired
-    private OCPP15MessageReceiveService service;
+	@Autowired
+	private OCPP15MessageReceiveService service;
 
-    @RequestMapping("/{protocol}/{deviceSerial}")
-    @ResponseBody
-    public String onReceive(@PathVariable String protocol, @PathVariable String deviceSerial,
-            @RequestBody String soapXml) {
-        return service.dispatch(protocol, soapXml);
+	@RequestMapping("/{protocol}")
+	@ResponseBody
+	public String onReceive(@PathVariable String protocol,	@RequestBody String soapXml) {
+		return service.dispatch(protocol, soapXml);
 
-    }
+	}
 
 }

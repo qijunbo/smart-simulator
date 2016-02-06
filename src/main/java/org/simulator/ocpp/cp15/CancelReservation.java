@@ -21,12 +21,14 @@ public class CancelReservation extends DownwardsOperation<CancelReservationReque
 	@Override
 	CancelReservationResponse createResponse(CancelReservationRequest request, Map<String, ?> parms) throws Exception {
 
-		ChargeBoxStatus obj = (ChargeBoxStatus) Cache.get(request.getReservationId());
+		ChargeBoxStatus old = (ChargeBoxStatus) Cache.get(request.getReservationId());
 
-		if (obj.getTransaction_Id() == request.getReservationId()) {
-			return accept(obj);
+		if (old != null && (old.getTransaction_Id() == request.getReservationId())) {
+			return accept(old);
 		}
-
+		
+		auditService.auditRequest(String.valueOf(request.getReservationId()),
+				"You haven't make a reservation with this id: " + request.getReservationId());
 		return reject();
 
 	}

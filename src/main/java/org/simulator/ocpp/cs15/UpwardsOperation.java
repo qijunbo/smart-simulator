@@ -16,17 +16,20 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.simulator.audit.model.AuditService;
 import org.simulator.common.soap.SOAPFactory;
 import org.simulator.common.soap.jaxb.SimpleMarshaller;
 import org.simulator.ocpp.AbstractOperatoin;
 import org.simulator.ocpp.OcppOperation;
 import org.simulator.ocpp.cp15.OCPP;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 public abstract class UpwardsOperation<R> extends AbstractOperatoin implements ResponseHandler<String> {
 
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	public static final String CENTRAL_URL = "CENTRAL_URL";
 
 	@Autowired
@@ -34,9 +37,6 @@ public abstract class UpwardsOperation<R> extends AbstractOperatoin implements R
 
 	@Autowired
 	protected SimpleMarshaller marshaller;
-
-	@Autowired
-	private AuditService auditService;
 
 	@Override
 	public String getProtocol() {
@@ -64,6 +64,11 @@ public abstract class UpwardsOperation<R> extends AbstractOperatoin implements R
 
 		String response = httpClient.execute(httpPost, this);
 		auditService.auditResponse(parms.get(OcppOperation.CHARGE_BOX_IDENTITY).toString(), response);
+		
+		if(log.isDebugEnabled()){
+			log.debug("#Response to chargepoint: " + response);
+		}
+		
 		httpClient.close();
 		return response;
 	}
@@ -78,7 +83,10 @@ public abstract class UpwardsOperation<R> extends AbstractOperatoin implements R
 		String soapXML = soapFactory.toString(soapMessage);
 
 		auditService.auditRequest(parms.get(OcppOperation.CHARGE_BOX_IDENTITY).toString(), soapXML);
-		System.out.println(soapXML);
+
+		if(log.isDebugEnabled()){
+			log.debug("#Send from chargepoint: " + soapXML);
+		}
 
 		StringEntity input = new StringEntity(soapXML, Charsets.UTF_8);
 		input.setContentType(MediaType.TEXT_XML_VALUE);

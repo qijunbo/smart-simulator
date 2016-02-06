@@ -24,22 +24,27 @@ public class ReserveNow extends DownwardsOperation<ReserveNowRequest, ReserveNow
 	ReserveNowResponse createResponse(ReserveNowRequest request, Map<String, ?> parms) throws Exception {
 
 		String chargeBoxIdentity = parms.get(OcppOperation.CHARGE_BOX_IDENTITY).toString();
-		ChargeBoxStatus obj = getDeviceStatus(chargeBoxIdentity, request.getConnectorId());
-
+		ChargeBoxStatus old = getDeviceStatus(chargeBoxIdentity, request.getConnectorId());
+		if( old == null){
+			return accept(request, chargeBoxIdentity);
+		}
+		
 		// device is fault
-		if (ChargePointStatus.FAULTED.equals(obj.getStatus())) {
+		if (ChargePointStatus.FAULTED.equals(old.getStatus())) {
 			return fault();
 		}
 
 		// device is in use
-		if (ChargePointStatus.OCCUPIED.equals(obj.getStatus())) {
+		if (ChargePointStatus.OCCUPIED.equals(old.getStatus())) {
+			auditService.auditRequest(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
 		// the same driver reserved again.
-		if (obj.getTransaction_Id() == request.getReservationId()) {
+		if (old.getTransaction_Id() == request.getReservationId()) {
 			return accept(request, chargeBoxIdentity);
 		} else {
+			auditService.auditRequest(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
