@@ -62,6 +62,11 @@ public class ChargePointCRUDController {
 	public @ResponseBody ChargePoint get(@PathVariable String id) {
 		return repository.findOne(id);
 	}
+	
+	@RequestMapping(value = "/serial/{serial}", method = GET)
+	public @ResponseBody ChargePoint getBySerial(@PathVariable String serial) {
+		return repository.findBySerial(serial);
+	}
 
 	@RequestMapping(value = "/{id}", method = DELETE)
 	public @ResponseBody String delete(@PathVariable String id) {
