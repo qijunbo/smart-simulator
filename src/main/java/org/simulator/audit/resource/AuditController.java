@@ -26,8 +26,12 @@ public class AuditController {
 	public List<OcppAudit> refresh(@PathVariable String deviceSerial, @PathVariable long date) {
 
 		Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
-		return repository.findByDeviceSerialAndTimeAfter(deviceSerial, new Date(date), sort);
 
+		if (date == 0L) {
+			return repository.findFirst50ByDeviceSerial(deviceSerial, sort);
+		} else {
+			return repository.findByDeviceSerialAndTimeAfter(deviceSerial, new Date(date), sort);
+		}
 	}
 
 	@RequestMapping(value = "/audit/device/{deviceSerial}", method = GET)
