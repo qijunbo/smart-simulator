@@ -36,7 +36,7 @@ public class ReserveNow extends DownwardsOperation<ReserveNowRequest, ReserveNow
 
 		// device is in use
 		if (ChargePointStatus.OCCUPIED.equals(old.getStatus())) {
-			auditService.auditRequest(chargeBoxIdentity, old.toString());
+			auditService.auditResponse(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
@@ -44,7 +44,7 @@ public class ReserveNow extends DownwardsOperation<ReserveNowRequest, ReserveNow
 		if (old.getTransaction_Id() == request.getReservationId()) {
 			return accept(request, chargeBoxIdentity);
 		} else {
-			auditService.auditRequest(chargeBoxIdentity, old.toString());
+			auditService.auditResponse(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 

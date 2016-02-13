@@ -64,7 +64,7 @@ public class OCPP15MessageReceiveService {
 					new OcppOperation.Identifier(protocol, request.getValue()
 							.getClass().getName())).execute(request.getValue(),
 					parms);
-			auditService.auditRequest(deviceSerial, response);
+			auditService.auditResponse(deviceSerial, response);
 
 			if (log.isDebugEnabled()) {
 				log.debug("#Response from chargepoint: " + response);
@@ -75,26 +75,26 @@ public class OCPP15MessageReceiveService {
 		} catch (SOAPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			auditService.auditRequest(deviceSerial, e.getMessage());
+			auditService.auditResponse(deviceSerial, e.getMessage());
 			return e.getMessage();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			auditService.auditRequest(deviceSerial, e.getMessage());
+			auditService.auditResponse(deviceSerial, e.getMessage());
 			return e.getMessage();
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			auditService.auditRequest(deviceSerial, e.getMessage());
+			auditService.auditResponse(deviceSerial, e.getMessage());
 			return e.getMessage();
 		} catch (BusinessException e) {
 			e.printStackTrace();
-			auditService.auditRequest(deviceSerial, e.getMessage());
+			auditService.auditResponse(deviceSerial, e.getMessage());
 			return e.getMessage();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			auditService.auditRequest(deviceSerial, e.getMessage());
+			auditService.auditResponse(deviceSerial, e.getMessage());
 			return e.getMessage();
 		}
 

@@ -14,7 +14,11 @@ public interface OcppAuditRepository extends PagingAndSortingRepository<OcppAudi
 	
 	public List<OcppAudit> findFirst50ByDeviceSerial(String deviceSerial, Sort sort);
 	
+	public List<OcppAudit> findTop50ByOrderByTimeDesc();
+	
 	public List<OcppAudit> findByDeviceSerialAndTimeAfter(String deviceSerial, Date date, Sort sort);
+	
+	public List<OcppAudit> findByTimeAfter(Date date, Sort sort);
 	
 	public long deleteByDeviceSerial(String deviceSerial);
 	

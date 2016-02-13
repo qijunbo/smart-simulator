@@ -27,7 +27,7 @@ public class CancelReservation extends DownwardsOperation<CancelReservationReque
 			return accept(old);
 		}
 		
-		auditService.auditRequest(String.valueOf(request.getReservationId()),
+		auditService.auditResponse(String.valueOf(request.getReservationId()),
 				"You haven't make a reservation with this id: " + request.getReservationId());
 		return reject();
 

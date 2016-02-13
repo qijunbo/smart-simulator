@@ -49,7 +49,7 @@ public class RemoteStopTransaction
 			parms.put(StopTransaction.ID_TAG, old.getId_tag());
 			return accept(parms, request.getTransactionId());
 		}
-		auditService.auditRequest(chargeBoxIdentity, old.toString());
+		auditService.auditResponse(chargeBoxIdentity, old.toString());
 		return reject();
 
 	}

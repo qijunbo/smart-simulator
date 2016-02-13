@@ -60,12 +60,12 @@ public class RemoteStartTransaction extends
 		}
 		// some body is using this connector.
 		if (ChargePointStatus.OCCUPIED.equals(old.getStatus())) {
-			auditService.auditRequest(chargeBoxIdentity, old.toString());
+			auditService.auditResponse(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 		// device is faulted
 		if (ChargePointStatus.FAULTED.equals(old.getStatus())) {
-			auditService.auditRequest(chargeBoxIdentity, old.toString());
+			auditService.auditResponse(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
@@ -77,7 +77,7 @@ public class RemoteStartTransaction extends
 			// if it's my reservation
 			return accept(parms, old);
 		} else {
-			auditService.auditRequest(chargeBoxIdentity, old.toString());
+			auditService.auditResponse(chargeBoxIdentity, old.toString());
 			return reject();
 		}
 
