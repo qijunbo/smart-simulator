@@ -1,7 +1,8 @@
 package org.simulator.audit.resource;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.simulator.audit.model.OcppAudit;
 import org.simulator.audit.model.OcppAuditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,11 +23,10 @@ public class AuditController {
 
 	@RequestMapping(value = "/audit/device/{deviceSerial}/time/{date}", method = GET)
 	@ResponseBody
-	public List<OcppAudit> refresh(@PathVariable String deviceSerial,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
+	public List<OcppAudit> refresh(@PathVariable String deviceSerial, @PathVariable long date) {
 
 		Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
-		return repository.findByDeviceSerialAndTimeAfter(deviceSerial, date, sort);
+		return repository.findByDeviceSerialAndTimeAfter(deviceSerial, new Date(date), sort);
 
 	}
 
