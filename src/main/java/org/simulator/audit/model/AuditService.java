@@ -6,4 +6,5 @@ public interface AuditService {
 
     public abstract OcppAudit auditResponse(String deviceSerial, String message);
 
+    public  long  deleteAuditOldThan(int days);
 }

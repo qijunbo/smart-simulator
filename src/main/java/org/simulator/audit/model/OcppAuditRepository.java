@@ -22,4 +22,6 @@ public interface OcppAuditRepository extends PagingAndSortingRepository<OcppAudi
 	
 	public long deleteByDeviceSerial(String deviceSerial);
 	
+	public long deleteByTimeBefore(Date time);
+	
 }

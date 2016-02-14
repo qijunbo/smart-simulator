@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import java.util.Date;
 import java.util.List;
 
+import org.simulator.audit.model.AuditService;
 import org.simulator.audit.model.OcppAudit;
 import org.simulator.audit.model.OcppAuditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class AuditController {
 	@Autowired
 	private OcppAuditRepository repository;
 
+	@Autowired
+	private AuditService service;
+
 	@RequestMapping(value = "/audit/time/{date}", method = GET)
 	@ResponseBody
 	public List<OcppAudit> refresh4all(@PathVariable long date) {
@@ -28,9 +32,7 @@ public class AuditController {
 		Sort sort = new Sort(new Sort.Order(Sort.Direction.DESC, "time"));
 
 		if (date == 0L) {
-			
-			List<OcppAudit> list = repository.findTop50ByOrderByTimeDesc();
-			return list ;
+			return repository.findTop50ByOrderByTimeDesc();
 		} else {
 			return repository.findByTimeAfter(new Date(date), sort);
 		}
@@ -62,6 +64,12 @@ public class AuditController {
 	@ResponseBody
 	public long delete(@PathVariable String deviceSerial) {
 		return repository.deleteByDeviceSerial(deviceSerial);
+	}
+
+	@RequestMapping(value = "/audit/day/{days}", method = DELETE)
+	@ResponseBody
+	public long deleteOldThan(@PathVariable int days) {
+		return service.deleteAuditOldThan(days);
 	}
 
 }
