@@ -1,3 +1,15 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+def getDateTime() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd-HHmm");
+		return format.format(new Date());
+}
+
+ext {
+	currentTime = getDateTime()
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -15,7 +27,7 @@ apply plugin: 'spring-boot'
 
 jar {
     baseName = 'smart-simulator'
-    version =  '3.0.0'
+    version =  '3.0.0-' + currentTime
 }
 
 repositories {
