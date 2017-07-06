@@ -12,6 +12,7 @@ ext {
 
 buildscript {
     repositories {
+		maven{ url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
         mavenCentral()
     }
     dependencies {
@@ -32,6 +33,7 @@ jar {
 }
  
 repositories {
+	maven{ url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
     mavenCentral()
 }
 
