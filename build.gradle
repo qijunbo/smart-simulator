@@ -33,7 +33,14 @@ jar {
 }
  
 repositories {
-	maven{ url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
+	maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
+	maven { url 'http://repo.spring.io/libs-snapshot'}
+	maven { url 'http://maven.springframework.org/release' }
+	maven { url 'http://maven.springframework.org/milestone' }
+	maven { url 'http://maven.springframework.org/snapshot' }
+	maven { url 'http://download.java.net/maven/2' }
+	maven { url 'http://maven.oschina.net/content/groups/public/' }
+	maven { url 'https://repository.jboss.org/nexus/content/groups/public-jboss/' }
     mavenCentral()
 }
 
