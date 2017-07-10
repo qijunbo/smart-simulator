@@ -1,7 +1,9 @@
+
 # smart-simulator
 
-#enable MongoDB remote access first.
-#open mongo.exe client, and execute this to create a db user with readWrite privilege.
+enable MongoDB remote access first.
+
+open mongo.exe client, and execute this to create a db user with readWrite privilege.
 
 
 use test
