@@ -1,3 +1,10 @@
+#Edit application.properties
+
+databaseName=<your value>
+serverAddress=<your ip or host name>
+port=27017
+user=spie
+password=18Mdream
 
 # smart-simulator
 Installation
@@ -13,3 +20,23 @@ db.createUser( { user: "spie", pwd: "18Mdream", roles: [ { role: "readWrite", db
 
 #Index Page
 <http://localhost:8083/>
+
+#Alternative for Docker
+
+mkdir -p /data/db
+
+mkdir -p /data/configdb
+
+docker pull mongo:3.4
+
+docker container run --name mongo -d -p 27017:27017 -v /data/db:/data/db  -v  /data/configdb:/data/configdb mongo 
+
+docker exec -it mongo bash
+
+mongo
+
+use test
+
+db.createUser( { user: "spie", pwd: "18Mdream", roles: [ { role: "readWrite", db: "test" } ]})
+
+ 
