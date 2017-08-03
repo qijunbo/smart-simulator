@@ -6,7 +6,8 @@ port=27017
 user=spie
 password=18Mdream
 
-# smart-simulator
+smart-simulator
+==
 Installation
 -------------
 enable MongoDB remote access first.
@@ -18,11 +19,12 @@ use test
 db.createUser( { user: "spie", pwd: "18Mdream", roles: [ { role: "readWrite", db: "test" } ]})
 
 
-#Index Page
+Index Page
+--
 <http://localhost:8083/>
 
-#Alternative for Docker
-
+Alternative for Docker
+--
 mkdir -p /data/db
 
 mkdir -p /data/configdb
@@ -39,4 +41,7 @@ use test
 
 db.createUser( { user: "spie", pwd: "18Mdream", roles: [ { role: "readWrite", db: "test" } ]})
 
- 
+Refer 
+--
+https://github.com/docker-library/mongo/blob/9914fd4e7967c32ad79710b08e4a21f4f68239f9/3.4/Dockerfile
+
