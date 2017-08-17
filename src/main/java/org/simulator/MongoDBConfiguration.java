@@ -1,4 +1,4 @@
-package org.simulator.config;
+package org.simulator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +16,23 @@ import com.mongodb.ServerAddress;
 @Configuration
 public class MongoDBConfiguration extends AbstractMongoConfiguration {
 
-	@Value("${databaseName}")
+	@Value("${mongo.datasource.databaseName}")
 	private String databaseName;
 
-	@Value("${serverAddress}")
+	@Value("${mongo.datasource.serverAddress}")
 	private String serverAddress;
 
-	@Value("${port}")
+	@Value("${mongo.datasource.port}")
 	private int port;
 
-	@Value("${user}")
+	@Value("${mongo.datasource.user}")
 	private String user;
 
-	@Value("${password}")
+	@Value("${mongo.datasource.password}")
 	private String password;
 
 	@Override
 	protected String getDatabaseName() {
-
 		return databaseName;
 	}
 
