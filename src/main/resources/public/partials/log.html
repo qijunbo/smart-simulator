@@ -1,0 +1,67 @@
+<!-- log part -->
+<div class="container hidden" id="log_container">
+	<div class="navbar-header">
+		<a class="navbar-brand" id="log">Downwards Logs of <code>{{chargepoint.serial}}</code></a>
+	</div>
+
+
+	<span class="navbar-form navbar-right"> <input type="text"
+		class="form-control" data-ng-model="keywords" placeholder="Search...">
+		<a href="#"><span class="glyphicon glyphicon-search"></span> </a></span>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Protocol</th>
+				<th>ChargePoint Serial ID</th>
+				<th class="col-sm-2">&nbsp; <a
+					data-ng-click="clearLogs(chargepoint)" title="clear logs"><span
+						class="glyphicon glyphicon-floppy-remove"></span></a>&nbsp; <a
+					data-ng-click="onHomeButtonClick()" title="go home"> <span
+						class="glyphicon glyphicon-home"> </span></a>&nbsp; <a
+					data-ng-click="onRetweetClick()" title="stop scroll"><span
+						id="retweet" class="glyphicon glyphicon-pushpin">&nbsp;{{refreshStatus()}}</span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{chargepoint.version}}</td>
+				<td>{{chargepoint.serial}}</td>
+				<td>&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li><a href="#">Upwards</a></li>
+		<li class="active"><a href="#">Downwards</a></li>
+
+	</ul>
+	<div class="row  tab-panel text-container">
+
+		<div class="col-sm-12">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="text-center">Request</th>
+						<th class="text-center">Response</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="row  tab-panel text-container"
+		data-ng-repeat="g in logs | filter: keywords ">
+		<div class="col-sm-6 content">
+			<p>{{formatTime(g.requestTime)}}</p>
+			<p>{{g.request}}</p>
+		</div>
+		<div class="col-sm-6 content">
+			<p>{{formatTime(g.responseTime)}}</p>
+			<p>{{g.response}}</p>
+			<p>{{g.error}}</p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>

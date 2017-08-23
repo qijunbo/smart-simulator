@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<div ng-include src="'partials/menu.html'"></div>
+<!-- log part -->
+<div class="container" id="log_container">
+
+	<h4 class="modal-title">
+		<a class="navbar-brand"><i>All Logs </i></a>
+	</h4>
+
+
+	<span class="navbar-form navbar-right"> <input type="text"
+		class="form-control" data-ng-model="keywords" placeholder="Search...">
+		<a href="#"><span class="glyphicon glyphicon-search"></span> </a></span>
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="col-sm-10">&nbsp;</th>
+		 
+				<th class="col-sm-2">
+					<div class="dropdown">
+						<a class="glyphicon glyphicon-remove dropdown-toggle "
+							data-toggle="dropdown"> RemoveLogs<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a data-ng-click="removeLogOlderThan(1)" class="glyphicon glyphicon-remove"
+								title="old than 1 days"> older than 1day</a></li>
+							<li><a data-ng-click="removeLogOlderThan(5)" class="glyphicon glyphicon-remove"
+								title="old than 5 days"> older than 5days</a></li>
+						</ul>
+					</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><td></td></tr>
+		</tbody>
+	</table>
+	<div class="row  tab-panel text-container ">
+		<div class="col-sm-12 content ">
+			<p>
+				New log comes here <b>…</b>
+			</p>
+		</div>
+	</div>
+
+	<div class="row  tab-panel text-container"
+		data-ng-repeat="g in audits | filter: keywords ">
+		<div class="col-sm-12 content">
+			<table class="table-responsive" >
+				<tbody>
+					<tr>
+						<td class="col-sm-3"><b>{{g.type}}</b></td>
+						<td class="col-sm-3"><b>{{g.deviceSerial }}</b></td>
+						<td class="col-sm-3"><b>{{g.transactionId}}</b></td>
+						<td class="col-sm-3"><b>{{g.time | date:'yyyy/MM/dd HH:mm:ss'}}</b></td>
+
+					</tr>
+					<tr>
+						<td colspan="4">{{g.message}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+
+<!-- invisable partials -->
+<div ng-include src="'partials/about.html'"></div>
+
+<!-- footer -->
+<div ng-include src="'partials/footer.html'"></div>

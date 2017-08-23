@@ -34,7 +34,7 @@ jar {
  
 repositories {
 	maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
-        maven { url 'http://maven.ibiblio.org/maven2/' }
+    maven { url 'http://maven.ibiblio.org/maven2/' }
 	maven { url 'http://repo.spring.io/libs-snapshot'}
 	maven { url 'http://maven.springframework.org/release' }
 	maven { url 'http://maven.springframework.org/milestone' }
