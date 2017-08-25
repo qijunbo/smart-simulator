@@ -15,7 +15,7 @@ db.createUser( { user: "spie", pwd: "18Mdream", roles: [ { role: "readWrite", db
 
 Edit application.properties
 ----
-```	
+```    
 databaseName=<your value>
 serverAddress=<your ip or host name>
 port=27017
